@@ -81,3 +81,19 @@ lazy val minitest = crossProject(JSPlatform, JVMPlatform)
       "io.monix" %%% "minitest" % "2.9.6"),
 
     Test / scalacOptions -= "-Xfatal-warnings")
+
+
+
+lazy val mytest = crossProject(JVMPlatform)
+  .in(file("mytest"))
+  .settings(
+    name := "mytest",
+    scalaVersion := "2.13.8",
+    libraryDependencies ++= Seq(
+      "org.tpolecat" %% "doobie-core"      % "1.0.0-RC1" % Test,
+      "org.tpolecat" %% "doobie-hikari"    % "1.0.0-RC1" % Test,          // HikariCP transactor.
+      "org.tpolecat" %% "doobie-postgres"  % "1.0.0-RC1" % Test, 
+      "org.testcontainers" % "postgresql" % "1.16.3",
+    )
+  )
+  .dependsOn(specs2)
